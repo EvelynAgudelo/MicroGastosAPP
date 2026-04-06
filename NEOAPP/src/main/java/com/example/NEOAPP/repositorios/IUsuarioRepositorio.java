@@ -8,6 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import com.example.NEOAPP.modelos.Usuario;
 
+
+
+
+
 @Repository
 public interface IUsuarioRepositorio extends JpaRepository<Usuario,Integer>{
     
@@ -17,6 +21,8 @@ public interface IUsuarioRepositorio extends JpaRepository<Usuario,Integer>{
 
     //BUSCAR POR NOMBRES QUE CONTENGAN NNN (LISTA)
     List <Usuario> findByNombresContaining(String nombres);
+
+
 
      //BUSCAR POR EDAD (LISTA) Saldra una lista, ya que al buscar por edad, muchas personas salen con la misma edad
      List <Usuario>findByEdad(Integer edad);
