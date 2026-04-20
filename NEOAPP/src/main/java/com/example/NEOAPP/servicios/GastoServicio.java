@@ -1,5 +1,7 @@
 package com.example.NEOAPP.servicios;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,10 @@ public class GastoServicio {
             );
         }
         return repoGasto.save(datosGasto);
+    }
+
+    public List<Gasto>ListarGasto(){
+        return repoGasto.findAll();
     }
 
 }
