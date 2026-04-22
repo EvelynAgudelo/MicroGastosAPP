@@ -1,66 +1,83 @@
 package com.example.NEOAPP.modelos;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table (name = "metodoPago")
-    public class MetodoPago {
-        //id, nombre, franquicia, estado(activo,inactivo),  descripcion 
-        private Integer id;
-        private String Nombre;
-        private String Franquicia;
-        private Double Estado;
-        private String Descripcion;
+@Table(name = "metodo_pago")
+public class MetodoPago {
 
-        /*RELACION ENTRE METODOS DE PAGO Y USUARIOS*/
-        @JoinColumn (name = "fk_usuario", referencedColumnName = "id")
-        private MetodoPago metodoPago;
-        
-        //cONSTRUCTOR
-        public MetodoPago() {
-        }
-        //GETTER Y SETTER
-        public Integer getId() {
-            return id;
-        }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-        public void setId(Integer id) {
-            this.id = id;
-        }
+    @Column(nullable = false)
+    private String nombre;
 
-        public String getNombre() {
-            return Nombre;
-        }
+    @Column(nullable = false)
+    private String franquicia;
 
-        public void setNombre(String nombre) {
-            Nombre = nombre;
-        }
+    // activo / inactivo
+    @Column(nullable = false)
+    private Boolean estado;
 
-        public String getFranquicia() {
-            return Franquicia;
-        }
+    @Column(nullable = false)
+    private String descripcion;
 
-        public void setFranquicia(String franquicia) {
-            Franquicia = franquicia;
-        }
+    // RELACIÓN: muchos métodos de pago -> un usuario
+    @ManyToOne
+    @JoinColumn(name = "fk_usuario")
+    private Usuario usuario;
 
-        public Double getEstado() {
-            return Estado;
-        }
-
-        public void setEstado(Double estado) {
-            Estado = estado;
-        }
-
-        public String getDescripcion() {
-            return Descripcion;
-        }
-
-        public void setDescripcion(String descripcion) {
-            Descripcion = descripcion;
+    public MetodoPago() {
     }
-    
-    
+
+    // GETTERS Y SETTERS
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getFranquicia() {
+        return franquicia;
+    }
+
+    public void setFranquicia(String franquicia) {
+        this.franquicia = franquicia;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }
