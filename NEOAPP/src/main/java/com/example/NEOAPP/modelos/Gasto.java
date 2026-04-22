@@ -1,79 +1,101 @@
 package com.example.NEOAPP.modelos;
 
 import java.time.LocalDate;
-import java.util.List;
-import org.hibernate.annotations.ManyToAny;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table (name = "gasto")
-    public class Gasto {//id, descripcion, fecha, valor,icono 
-        private Integer id;
-        private String Descripcion;
-        private LocalDate Fecha;
-        private double Valor; //Double por si el valor tiene decimales
-        private String Icono;
+@Table(name = "gasto")
+public class Gasto {
 
-        /*RELACION CON TABLA USUARIO: 1 GASTO - 1 USUARIO*/
-        @ManyToAny       /*ManyToAny sirve para la relacion de 1 a 1*/
-        @JoinColumn(name = "fk_usuario", referencedColumnName = "id")    /*Sirve para crear las llaves foraneas   NAME: crear el nombre para la llave foranea*/
-        private Usuario usuario;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-        /*RELACION CON TABLA CATEGORIA: 1 GASTO -  MUCHAS CATEGORIAS*/
-        @OneToMany (mappedBy = "gasto")
-        private List <Categoria> categorias;
+    @Column(nullable = false)
+    private String descripcion;
 
-        /*RELACION CON TABLA COMERCIO: 1 GASTO - MUCHOS COMERCIOS*/
-        @OneToMany (mappedBy = "comercio")
-        private List <Comercio> comercios ;
+    @Column(nullable = false)
+    private LocalDate fecha;
 
+    @Column(nullable = false)
+    private double valor;
 
-        //CONSTRUCTOR
-        public Gasto() {
-        }
+    @Column(nullable = false)
+    private String icono;
 
-        //GETTER Y SETTER
-        public Integer getId() {
-            return id;
-        }
+    // RELACIÓN: muchos gastos -> 1 usuario
+    @ManyToOne
+    @JoinColumn(name = "fk_usuario")
+    private Usuario usuario;
 
-        public void setId(Integer id) {
-            this.id = id;
-        }
+    // RELACIÓN: muchos gastos -> 1 categoría
+    @ManyToOne
+    @JoinColumn(name = "fk_categoria")
+    private Categoria categoria;
 
-        public String getDescripcion() {
-            return Descripcion;
-        }
+    @ManyToOne
+    @JoinColumn(name = "fk_comercio")
+    private Comercio comercio;
 
-        public void setDescripcion(String descripcion) {
-            Descripcion = descripcion;
-        }
+    public Gasto() {
+    }
 
-        public LocalDate getFecha() {
-            return Fecha;
-        }
+    // GETTERS Y SETTERS
 
-        public void setFecha(LocalDate fecha) {
-            Fecha = fecha;
-        }
+    public Integer getId() {
+        return id;
+    }
 
-        public double getValor() {
-            return Valor;
-        }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-        public void setValor(double valor) {
-            Valor = valor;
-        }
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-        public String getIcono() {
-            return Icono;
-        }
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
-        public void setIcono(String icono) {
-            Icono = icono;
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public String getIcono() {
+        return icono;
+    }
+
+    public void setIcono(String icono) {
+        this.icono = icono;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }

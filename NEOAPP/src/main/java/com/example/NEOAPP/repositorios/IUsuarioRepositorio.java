@@ -20,7 +20,7 @@ public interface IUsuarioRepositorio extends JpaRepository<Usuario,Integer>{
     Optional <Usuario> findByDocumento(String documento);//BUCAR POR DOCUMENTO (1) Cuando en la busqueda solo me aparecera un atributo. le pondremos "OPTIONAL", ya que, como ejemplo el documento solo lo tiene una sola persona
 
     //BUSCAR POR NOMBRES QUE CONTENGAN NNN (LISTA)
-    List <Usuario> findByNombresContaining(String nombres);
+    List<Usuario> findByNombreContaining(String nombre);
 
 
 

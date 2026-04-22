@@ -1,46 +1,76 @@
-//LA CAPA QUE HACE LAS CONSULTAS ES EL REPOSITORIO
 package com.example.NEOAPP.servicios;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
 import com.example.NEOAPP.modelos.Usuario;
 import com.example.NEOAPP.repositorios.IUsuarioRepositorio;
 
 @Service
 public class UsuarioServicio {
-    
-    @Autowired //Para conectar las dependencias
-        private IUsuarioRepositorio repositorio;  //Inyeccion de una dependencia
 
-        public Usuario GuardarUsuario(Usuario datosUsuario){
-            //Hay que validar la operacion que me estan pidiendo hacer (ej: guardar usuario)
-            if(datosUsuario.getNombre()==null || datosUsuario.getNombre().isBlank() || datosUsuario.getNombre().isEmpty()){
-                            //No esta definido                         Esta en blanco                         Esta vacio
-                throw new ResponseStatusException(
+    @Autowired
+    private IUsuarioRepositorio repositorio;
+
+    // GUARDAR USUARIO
+    public Usuario GuardarUsuario(Usuario datosUsuario) {
+
+        // VALIDAR OBJETO COMPLETO
+        if (datosUsuario == null) {
+            throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "El nombre de usuario es obligatorio, revisar por favor"
-                );
-            }
-            if (datosUsuario.getDocumento().length()<5) {
-                throw new ResponseStatusException(
+                    "El usuario no puede ser nulo"
+            );
+        }
+
+        // VALIDAR NOMBRE
+        String nombre = datosUsuario.getNombre();
+        if (nombre == null || nombre.isBlank()) {
+            throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "El documento es inválido"
-                );
-            }
-            //Despues de las validaciones, intento guardar los datos que me enviaron
-            return repositorio.save(datosUsuario);  //Guarda y retorna los datos ingresados del usuario
+                    "El nombre es obligatorio"
+            );
         }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //Servicio para listar todos los usuarios en BD
-        public List<Usuario>ListarUsuarios(){
-            return repositorio.findAll();
+
+        // VALIDAR DOCUMENTO
+        String documento = datosUsuario.getDocumento();
+        if (documento == null || documento.length() < 5) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "El documento debe tener mínimo 5 caracteres"
+            );
         }
-/////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////
-        //Servicio para eliminar un usuario en BD
-        //Servicio para modificar un usuario en BD
-        //Servicio para buscar un usuario por su id 
 
+        // GUARDAR EN BD
+        return repositorio.save(datosUsuario);
+    }
 
+    // LISTAR USUARIOS
+    public List<Usuario> ListarUsuarios() {
+        return repositorio.findAll();
+    }
+
+    // BUSCAR POR ID
+    public Usuario BuscarPorId(Integer id) {
+        return repositorio.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Usuario no encontrado"
+                ));
+    }
+
+    // ELIMINAR USUARIO
+    public void EliminarUsuario(Integer id) {
+        if (!repositorio.existsById(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Usuario no encontrado"
+            );
+        }
+        repositorio.deleteById(id);
+    }
 }
