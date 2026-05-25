@@ -18,7 +18,7 @@ public class Usuario {
     @Column(name = "nombre_completo")
     private String nombre;
 
-    // 🔥 ENUM CORRECTO
+    //ENUM CORRECTO
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoDocumento tipoDocumento;
@@ -38,7 +38,7 @@ public class Usuario {
     @Column(name = "genero", nullable = false)
     private String genero;
 
-    // 🔥 ENUM CORRECTO
+    //ENUM CORRECTO
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
     private Estados activo;
