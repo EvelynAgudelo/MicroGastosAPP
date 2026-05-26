@@ -1,5 +1,6 @@
 package com.example.NEOAPP.controladores;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.NEOAPP.modelos.Usuario;
 import com.example.NEOAPP.servicios.UsuarioServicio;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/microgastosapp/v1/usuarios")
 public class UsuarioControlador {
